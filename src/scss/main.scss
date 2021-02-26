@@ -4,10 +4,30 @@
 @import "modules/hello.scss";
 
 body {
-  background: $wtf;
-  color: #fff;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  justify-content: space-around;
+}
+
+.toDo {
+  display: flex;
+  width: 900px;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+}
+
+form {
+  display: flex;
+
+
+}
+
+.search {
+  display: flex;
+  align-items: flex-start;
+
 }

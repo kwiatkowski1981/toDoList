@@ -29,47 +29,57 @@ const removeTask = (e) => {
 
 const addTask = (e) => {
     e.preventDefault();
-    const newTitleTask = input.value;
-    if (input.value.length) {
-        for (const titleTask of toDoList) {
-            if (titleTask === newTitleTask) {
-                return
-            }
-        }
-        const task = document.createElement('li');
-        task.classList.add('task');
-        task.innerHTML = newTitleTask + "   <button> usun </button>";
-        toDoList.push(task);
-        renderList();
-        ul.appendChild(task);
-        input.value = "";
-        taskNumber.textContent = listItems.length;
-        console.log();
-        task.querySelector('button').addEventListener('click', removeTask);
+    const newTitleTask = input.value;       // przypisanie wartosci z input do zmiennej
+    if (input.value.length) {               // sprawdzenie czy dlugosc input jest true jesli tak idz dalej
+        // for (const titleTask of toDoList) {
+        //     if (titleTask === newTitleTask) {            // na pozniej sprawdzanie czy wpis juz istnieje
+        //         return;
+        //     }
+        // }
+        const task = document.createElement('li');  // tworzenie nowego elementu li
+        task.classList.add('task');                          // dodawanie klasy task nowemu li
+        task.innerHTML = newTitleTask + "   <button> usun </button>"; // ustalanie ciala nowego li
+        toDoList.push(task);                                  // dodawanie do tablicy nowego li
+        renderList();                                       // renderowanie nowej listy
+        ul.appendChild(task);                               // wywolanie nowych taskow li w ul
+        console.log(task);
+        input.value = "";                                    // czyszczenie okna wpisywania
+        taskNumber.textContent = listItems.length;          // task counter
+        console.log(taskNumber.textContent);                // wyswietl counter zadan
+        task.querySelector('button').addEventListener('click', removeTask); //  calback na klika batona usun
+        console.log(toDoList);
     }
 }
 
-const renderList = () => {
-    ul.textContent = "";
-    toDoList.forEach((toDoElement, key) => {
-        toDoElement.dataset.key = key;
-        ul.appendChild(toDoElement);
+const renderList = () => {                              // funkcja renderuj liste
+    ul.textContent = "";                                //czysc liste
+    toDoList.forEach((toDoElement, key) => {    // forEach na tablicy
+        toDoElement.dataset.key = key;                  // przypisanie klucza elementom
+        ul.appendChild(toDoElement);                    // wywolanie elementow li w liscie ul
     })
 }
-form.addEventListener('submit', addTask);
+
 
 
 const searchTask = (e) => {
     const searchText = e.target.value.toLowerCase();
-    let tasksFound = [...listItems];
-    tasksFound = tasksFound.filter(task => task.textContent.toLowerCase().includes(searchText));
-    // ulSearch.textContent = "";
-    tasksFound.forEach(li => ulSearch.appendChild(li));
-    // renderList();
-    console.log(tasksFound);
+    console.log(searchText);
+    let result = [...listItems].filter(foundElement => foundElement.textContent.toLowerCase().includes(searchText));
+    console.log(result);
+    ulSearch.textContent = "";
+
+
+
+    // tasksFound.forEach(li => ulSearch.appendChild(li));
+    // console.log(tasksFound);
+    // tasksFound.forEach((foundToDoElement, key) => {
+    //     foundToDoElement.dataset.key = key;
+    //     ulSearch.appendChild(foundToDoElement);
+    // })
+
 }
 inputSearch.addEventListener('input', searchTask);
-
+form.addEventListener('submit', addTask);
 
 // *****************************************************************************************************************************************
 // *****************************************************************************************************************************************

@@ -41,13 +41,14 @@ const addTask = (e) => {
         task.innerHTML = newTitleTask + "   <button> usun </button>"; // ustalanie ciala nowego li
         toDoList.push(task);                                  // dodawanie do tablicy nowego li
         renderList();                                       // renderowanie nowej listy
-        ul.appendChild(task);                               // wywolanie nowych taskow li w ul
-        console.log(task);
+        // ul.appendChild(task);                               // wywolanie nowych taskow li w ul
+        // console.log(`task ${task}`);
+        console.log(` %c ${toDoList}`, "color: orange;")
         input.value = "";                                    // czyszczenie okna wpisywania
         taskNumber.textContent = listItems.length;          // task counter
-        console.log(taskNumber.textContent);                // wyswietl counter zadan
+        console.log(` %c ${taskNumber.textContent}`, "color: green");                // wyswietl counter zadan
         task.querySelector('button').addEventListener('click', removeTask); //  calback na klika batona usun
-        console.log(toDoList);
+        // console.log(toDoList);
     }
 }
 
@@ -56,27 +57,30 @@ const renderList = () => {                              // funkcja renderuj list
     toDoList.forEach((toDoElement, key) => {    // forEach na tablicy
         toDoElement.dataset.key = key;                  // przypisanie klucza elementom
         ul.appendChild(toDoElement);                    // wywolanie elementow li w liscie ul
+        // console.log(`%c  todoelement ${toDoElement}`, "color: red");
     })
 }
 
 
-
+let results;
 const searchTask = (e) => {
     const searchText = e.target.value.toLowerCase();
-    console.log(searchText);
-    let result = [...listItems].filter(foundElement => foundElement.textContent.toLowerCase().includes(searchText));
-    console.log(result);
-    ulSearch.textContent = "";
 
+    if (e.target.value) {
+        console.log(searchText);
+        results = [...listItems].filter(searchedElement => searchedElement.textContent.toLowerCase().includes(searchText));
+        console.log(` %c ${results}`, "color: yellow;");
+        ul.textContent = "";
+        results.forEach(result => ul.appendChild(result));
+        taskNumber.textContent = listItems.length;
 
-
-    // tasksFound.forEach(li => ulSearch.appendChild(li));
-    // console.log(tasksFound);
-    // tasksFound.forEach((foundToDoElement, key) => {
-    //     foundToDoElement.dataset.key = key;
-    //     ulSearch.appendChild(foundToDoElement);
-    // })
-
+    }
+    else  {
+        renderList();
+        results.length = 0;
+        console.log(`%c ${searchText.length}`, "color: red");
+        taskNumber.textContent = listItems.length;
+    }
 }
 inputSearch.addEventListener('input', searchTask);
 form.addEventListener('submit', addTask);
